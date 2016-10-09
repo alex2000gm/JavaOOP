@@ -32,7 +32,12 @@ public class GeometricalFigure {
         lengthOfSideB = rectangleSideB;
     }
 
-    public GeometricalFigure(double circleRadius) {
+    public GeometricalFigure(double rectangleSideA){
+        lengthOfSideA=rectangleSideA;
+        lengthOfSideB=rectangleSideA;
+    }
+
+    public GeometricalFigure(double circleRadius,String r) {
         radius = circleRadius;
     }
 
@@ -166,11 +171,11 @@ class Rectangle extends GeometricalFigure implements Shape {
     @Override
     public String toString() {
         String stringRectangle = "";
-        return stringRectangle.concat("Длины сторон прямоугольника = " + lengthOfSideA + " и " + lengthOfSideB + " Ширина = " + getWidth() + "  Высота = " + getHeight() + " Периметр = " + getPerimeter() + " Площадь = " + getArea());
+        return stringRectangle.concat("Ширина прямоугольника = " + getWidth() + "  Высота = " + getHeight() + " Периметр = " + getPerimeter() + " Площадь = " + getArea());
     }
 }
 
-class Square extends Rectangle implements Shape {
+class Square extends GeometricalFigure implements Shape {
     public Square(double lengthOfSideA) {
         super(lengthOfSideA);
     }
@@ -199,13 +204,13 @@ class Square extends Rectangle implements Shape {
     @Override
     public String toString() {
         String stringSquare = "";
-        return stringSquare.concat("Длины сторон квадрата = " + lengthOfSideA + " и " + lengthOfSideA + " Ширина = " + getWidth() + "  Высота = " + getHeight() + " Периметр = " + getPerimeter() + " Площадь = " + getArea());
+        return stringSquare.concat("Ширина квадрата = " + getWidth() + "  Высота = " + getHeight() + " Периметр = " + getPerimeter() + " Площадь = " + getArea());
     }
 }
 
 class Circle extends GeometricalFigure {
-    public Circle(double radius) {
-        super(radius);
+    public Circle(double radius,String r) {
+        super(radius,r);
     }
 
     @Override

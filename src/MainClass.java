@@ -6,7 +6,7 @@ public class MainClass {
         GeometricalFigure rectangle = new Rectangle(5, 3);
         System.out.println(rectangle.toString());
 
-        GeometricalFigure circle = new Circle(7);
+        GeometricalFigure circle = new Circle(7,"r");
         System.out.println(circle.toString());
 
         GeometricalFigure triangle = new Triangle(13,144,123,222,21,44);
