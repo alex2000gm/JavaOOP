@@ -5,7 +5,7 @@ class Rectangle extends GeometricalFigure implements Shape {
 
     public Rectangle(double lengthOfSideA) {
         super(lengthOfSideA);
-        this.lengthOfSideA = lengthOfSideB; // TODO: подумать над размещением этой строки и над строкой вообще
+        this.setLengthOfSideB(lengthOfSideA); // TODO: подумать над размещением этой строки и над строкой вообще
     }
 
     public Rectangle() {
@@ -13,22 +13,22 @@ class Rectangle extends GeometricalFigure implements Shape {
 
     @Override
     public double getWidth() {
-        return Math.max(this.lengthOfSideA, this.lengthOfSideB);
+        return Math.max(this.getLengthOfSideA(), this.getLengthOfSideB());
     }
 
     @Override
     public double getHeight() {
-        return Math.min(this.lengthOfSideA, this.lengthOfSideB);
+        return Math.min(this.getLengthOfSideA(), this.getLengthOfSideB());
     }
 
     @Override
     public double getArea() {
-        return this.lengthOfSideA * this.lengthOfSideB;
+        return this.getLengthOfSideA() * this.getLengthOfSideB();
     }
 
     @Override
     public double getPerimeter() {
-        return (this.lengthOfSideA + this.lengthOfSideB) * 2;
+        return (this.getLengthOfSideA() + this.getLengthOfSideB()) * 2;
     }
 
     @Override

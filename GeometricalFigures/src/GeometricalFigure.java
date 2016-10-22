@@ -4,73 +4,104 @@
 // TODO: 09.10.16 добавить exceptions
 
 public class GeometricalFigure {
-    double lengthOfSideA;
-    double lengthOfSideB;
-    double radius;
-    double x1;
-    double y1;
-    double x2;
-    double y2;
-    double x3;
-    double y3;
-
-    private double width;
+    private double lengthOfSideA;
+    private double lengthOfSideB;
+    private double radius;
+    private double x1;
+    private double y1;
+    private double x2;
+    private double y2;
+    private double x3;
+    private double y3;
+ /* private double width;
     private double height;
     private double area;
-    private double perimeter;
+    private double perimeter; */
 
     public GeometricalFigure(double coordinateX1, double coordinateY1, double coordinateX2, double coordinateY2, double coordinateX3, double coordinateY3) {
-        x1 = coordinateX1;
-        y1 = coordinateY1;
-        x2 = coordinateX2;
-        y2 = coordinateY2;
-        x3 = coordinateX3;
-        y3 = coordinateY3;
+        this.x1 = coordinateX1;
+        this.y1 = coordinateY1;
+        this.x2 = coordinateX2;
+        this.y2 = coordinateY2;
+        this.x3 = coordinateX3;
+        this.y3 = coordinateY3;
     }
 
     public GeometricalFigure(double rectangleSideA, double rectangleSideB) {
-        lengthOfSideA = rectangleSideA;
-        lengthOfSideB = rectangleSideB;
+        this.lengthOfSideA = rectangleSideA;
+        this.lengthOfSideB = rectangleSideB;
     }
 
     public GeometricalFigure(double rectangleSideA) {
-        lengthOfSideA = rectangleSideA;
-        lengthOfSideB = rectangleSideA;
+        this.lengthOfSideA = rectangleSideA;
+        this.lengthOfSideB = rectangleSideA;
     }
 
     public GeometricalFigure(double circleRadius, String r) {
-        radius = circleRadius;
+        this.radius = circleRadius;
     }
 
     public GeometricalFigure() {
     }
 
+    public double getLengthOfSideA() {
+        return lengthOfSideA;
+    }
+
+    public double getLengthOfSideB() {
+        return lengthOfSideB;
+    }
+
+    public double getRadius() {
+        return radius;
+    }
+
+    public double getX1() {
+        return x1;
+    }
+
+    public double getY1() {
+        return y1;
+    }
+
+    public double getX2() {
+        return x2;
+    }
+
+    public double getY2() {
+        return y2;
+    }
+
+    public double getX3() {
+        return x3;
+    }
+
+    public double getY3() {
+        return y3;
+    }
+
     public double getWidth() {
-        return width;
+        return 0;
     }
 
     public double getHeight() {
-        return height;
+        return 0;
     }
 
     public double getArea() {
-        return area;
+        return 0;
     }
 
     public double getPerimeter() {
-        return perimeter;
+        return 0;
+    }
+
+    public void setLengthOfSideB(double lengthOfSideB) {
+        this.lengthOfSideB = lengthOfSideB;
     }
 }
 
-interface Shape {
-    double getWidth();
 
-    double getHeight();
-
-    double getArea();
-
-    double getPerimeter();
-}
 
 
 

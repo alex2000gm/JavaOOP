@@ -6,22 +6,22 @@ class Circle extends GeometricalFigure {
 
     @Override
     public double getWidth() {
-        return this.radius * 2;
+        return this.getRadius() * 2;
     }
 
     @Override
     public double getHeight() {
-        return this.radius * 2;
+        return this.getRadius() * 2;
     }
 
     @Override
     public double getArea() {
-        return Math.PI * Math.pow(this.radius, 2);
+        return Math.PI * Math.pow(this.getRadius(), 2);
     }
 
     @Override
     public double getPerimeter() {
-        return 2 * Math.PI * this.radius;
+        return 2 * Math.PI * this.getRadius();
     }
 
     @Override

@@ -7,9 +7,9 @@ class Triangle extends GeometricalFigure implements Shape {
     // TODO: сделать верификацию треугольника
     @Override
     public double getWidth() {
-        double[] x = {this.x1, this.x2, this.x3};
-        double maxX = this.x1;
-        double minX = this.x1;
+        double[] x = {this.getX1(), this.getX2(), this.getX3()};
+        double maxX = this.getX1();
+        double minX = this.getX1();
         for (double i : x) {
             if (i > maxX) {
                 maxX = i;
@@ -22,9 +22,9 @@ class Triangle extends GeometricalFigure implements Shape {
 
     @Override
     public double getHeight() {
-        double[] y = {this.y1, this.y2, this.y3};
-        double maxY = this.y1;
-        double minY = this.y1;
+        double[] y = {this.getY1(), this.getY2(), this.getY3()};
+        double maxY = this.getY1();
+        double minY = this.getY1();
         for (double i : y) {
             if (i > maxY) {
                 maxY = i;
@@ -35,9 +35,9 @@ class Triangle extends GeometricalFigure implements Shape {
         return maxY - minY;
     }
 
-    private double aBLength = lengthOfSide(this.x1, this.y1, this.x2, this.y2);
-    private double bCLength = lengthOfSide(this.x2, this.y2, this.x3, this.y3);
-    private double aCLength = lengthOfSide(this.x1, this.y1, this.x3, this.y3);
+    private double aBLength = lengthOfSide(this.getX1(), this.getY1(), this.getX2(), this.getY2());
+    private double bCLength = lengthOfSide(this.getX2(), this.getY2(), this.getX3(), this.getY3());
+    private double aCLength = lengthOfSide(this.getX1(), this.getY1(), this.getX3(), this.getY3());
 
     @Override
     public double getPerimeter() {
