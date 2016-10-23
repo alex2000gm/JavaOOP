@@ -1,3 +1,4 @@
+import java.util.Arrays;
 
 /**
  * Created by alex2000 on 22.10.16.
@@ -200,5 +201,42 @@ public class Vector {
             scalarMultiplication = scalarMultiplication + vector1.getVector()[i] * vector2.getVector()[i];
         }
         return scalarMultiplication;
+    }
+
+    public boolean equals(Vector vector) {
+        boolean resultOfCompare = true;
+        if (this.getSize() != vector.getSize()) {
+            resultOfCompare = false;
+        }
+        int index = 0;
+        while (resultOfCompare && index < vector.getSize()) {
+            resultOfCompare = isComparison(this.getVector()[index], vector.getVector()[index]);
+            index++;
+        }
+        return resultOfCompare;
+    }
+
+    private boolean isComparison(double numForCompare1, double numForCompare2) {
+        final double EPSILON = 0.0001;
+        return Math.abs(numForCompare1 - numForCompare2) < EPSILON;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Vector)) return false;
+
+        Vector vector1 = (Vector) o;
+
+        if (vectorLength != vector1.vectorLength) return false;
+        return Arrays.equals(getVector(), vector1.getVector());
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Arrays.hashCode(getVector());
+        result = 31 * result + vectorLength;
+        return result;
     }
 }

@@ -27,15 +27,15 @@ public class Main {
         System.out.println(diff.toString());
         System.out.println(diff2.toString());
 
-        diff2.setNumByIndex(4,55);
+        diff2.setNumByIndex(4, 55);
         System.out.println(diff2.toString());
         System.out.println(diff2.getNumByIndex(4));
         System.out.println();
-        double multiplication = Vector.scalarMultiplication(firstVector,vectorFromArray2);
+        double multiplication = Vector.scalarMultiplication(firstVector, vectorFromArray2);
         System.out.println(multiplication);
-        Vector vectorDifference = Vector.differenceOfVectors(vectorFromArray2,firstVector);
+        Vector vectorDifference = Vector.differenceOfVectors(vectorFromArray2, firstVector);
         System.out.println(vectorDifference.toString());
-        Vector vectorSum = Vector.sumOfVectors(firstVector,vectorFromArray2);
+        Vector vectorSum = Vector.sumOfVectors(firstVector, vectorFromArray2);
         System.out.println(vectorSum.toString());
     }
 }
