@@ -5,18 +5,18 @@ import java.util.Arrays;
  */
 public class Vector {
     private double[] vector;
-    private int vectorLength;
+    private int vectorSize;
 
-    public Vector(int vectorLength) {
-        this.vectorLength = vectorLength;
-        this.vector = new double[vectorLength];
-        for (int i = 0; i < vectorLength; i++) {
+    public Vector(int vectorSize) {
+        this.vectorSize = vectorSize;
+        this.vector = new double[vectorSize];
+        for (int i = 0; i < vectorSize; i++) {
             this.vector[i] = 0;
         }
     }
 
     public Vector(double[] array) {
-        this.vectorLength = array.length;
+        this.vectorSize = array.length;
         this.vector = new double[array.length];
         for (int i = 0; i < array.length; i++) {
             this.vector[i] = array[i];
@@ -24,26 +24,26 @@ public class Vector {
     }
 
     public Vector(Vector vectorForCopy) {
-        this.vectorLength = vectorForCopy.getSize();
+        this.vectorSize = vectorForCopy.getSize();
         this.vector = new double[vectorForCopy.getSize()];
         for (int i = 0; i < vectorForCopy.getSize(); i++) {
             this.vector[i] = vectorForCopy.getVector()[i];
         }
     }
 
-    public Vector(int vectorLength, double[] array) {
-        this.vectorLength = vectorLength;
-        this.vector = new double[vectorLength];
-        if (vectorLength == array.length) {
-            for (int i = 0; i < vectorLength; i++) {
+    public Vector(int vectorSize, double[] array) {
+        this.vectorSize = vectorSize;
+        this.vector = new double[vectorSize];
+        if (vectorSize == array.length) {
+            for (int i = 0; i < vectorSize; i++) {
                 this.vector[i] = array[i];
             }
         } else {
             int counter = 0;
-            while (vectorLength <= array.length) {
+            while (vectorSize <= array.length) {
                 this.vector[counter] = array[counter];
             }
-            while (counter < vectorLength) {
+            while (counter < vectorSize) {
                 this.vector[counter] = 0;
             }
         }
@@ -54,11 +54,37 @@ public class Vector {
     }
 
     public int getSize() {
-        return vectorLength;
+        return vectorSize;
     }
 
     public double getNumByIndex(int index) {
         return this.getVector()[index];
+    }
+
+    public Vector getMultiply(double multiplier) {
+        Vector multipliedVector = new Vector(this.getSize());
+        for (int i = 0; i < multipliedVector.getSize(); i++) {
+            //  multipliedVector.getVector()[i] = this.getVector()[i] * multiplier;
+            multipliedVector.setNumByIndex(i, this.getVector()[i] * multiplier);
+        }
+        return multipliedVector;
+    }
+
+    public Vector getInverse() {
+        Vector inversedVector = new Vector(this.getSize());
+        for (int i = 0; i < inversedVector.getSize(); i++) {
+            // inversedVector.getVector()[i] = this.getVector()[i] * (-1);
+            inversedVector.setNumByIndex(i, this.getVector()[i] * (-1));
+        }
+        return inversedVector;
+    }
+
+    public double getLength() {
+        double sumOfSquares = 0;
+        for (int i = 0; i < this.getSize(); i++) {
+            sumOfSquares = sumOfSquares + Math.pow(this.getVector()[i], 2);
+        }
+        return Math.sqrt(sumOfSquares);
     }
 
     public void setNumByIndex(int index, double newValue) {
@@ -97,7 +123,8 @@ public class Vector {
         int index = 0;
         if (this.getSize() != vectorForSum.getSize()) {
             while (index < Math.min(this.getSize(), vectorForSum.getSize())) {
-                sumOfVectors.getVector()[index] = this.getVector()[index] + vectorForSum.getVector()[index];
+                //sumOfVectors.getVector()[index] = this.getVector()[index] + vectorForSum.getVector()[index];
+                sumOfVectors.setNumByIndex(index, this.getVector()[index] + vectorForSum.getVector()[index]);
                 index++;
             }
             System.arraycopy(findBiggerVector(this, vectorForSum).getVector(), index, sumOfVectors.getVector(), index, vectorForSum.getSize() - index);
@@ -113,39 +140,26 @@ public class Vector {
         int index = 0;
         if (this.getSize() != vectorForDifference.getSize()) {
             while (index < Math.min(this.getSize(), vectorForDifference.getSize())) {
-                differenceOfVectors.getVector()[index] = this.getVector()[index] - vectorForDifference.getVector()[index];
+                // differenceOfVectors.getVector()[index] = this.getVector()[index] - vectorForDifference.getVector()[index];
+                differenceOfVectors.setNumByIndex(index, this.getVector()[index] - vectorForDifference.getVector()[index]);
                 index++;
             }
             if (this.getSize() > vectorForDifference.getSize()) {
                 System.arraycopy(this.getVector(), index, differenceOfVectors.getVector(), index, this.getSize() - index);
             } else {
                 while (index < differenceOfVectors.getSize()) {
-                    differenceOfVectors.getVector()[index] = findBiggerVector(this, vectorForDifference).getVector()[index] * (-1);
+                    // differenceOfVectors.getVector()[index] = findBiggerVector(this, vectorForDifference).getVector()[index] * (-1);
+                    differenceOfVectors.setNumByIndex(index, findBiggerVector(this, vectorForDifference).getVector()[index] * (-1));
                     index++;
                 }
             }
         } else {
             for (int i = 0; i < differenceOfVectors.getSize(); i++) {
-                differenceOfVectors.getVector()[i] = this.getVector()[i] - vectorForDifference.getVector()[i];
+                // differenceOfVectors.getVector()[i] = this.getVector()[i] - vectorForDifference.getVector()[i];
+                differenceOfVectors.setNumByIndex(i, this.getVector()[i] - vectorForDifference.getVector()[i]);
             }
         }
         return differenceOfVectors;
-    }
-
-    public Vector getMultiply(double multiplier) {
-        Vector multipliedVector = new Vector(this.getSize());
-        for (int i = 0; i < multipliedVector.getSize(); i++) {
-            multipliedVector.getVector()[i] = this.getVector()[i] * multiplier;
-        }
-        return multipliedVector;
-    }
-
-    public Vector getInverse() {
-        Vector inversedVector = new Vector(this.getSize());
-        for (int i = 0; i < inversedVector.getSize(); i++) {
-            inversedVector.getVector()[i] = this.getVector()[i] * (-1);
-        }
-        return inversedVector;
     }
 
     public static Vector sumOfVectors(Vector vector1, Vector vector2) {
@@ -153,7 +167,8 @@ public class Vector {
         int index = 0;
         if (vector1.getSize() != vector2.getSize()) {
             while (index < Math.min(vector1.getSize(), vector2.getSize())) {
-                sumOfVectors.getVector()[index] = vector1.getVector()[index] + vector2.getVector()[index];
+                // sumOfVectors.getVector()[index] = vector1.getVector()[index] + vector2.getVector()[index];
+                sumOfVectors.setNumByIndex(index, vector1.getVector()[index] + vector2.getVector()[index]);
                 index++;
             }
             Vector biggerVector = vector1;
@@ -165,7 +180,8 @@ public class Vector {
             }
         } else {
             for (index = 0; index < sumOfVectors.getSize(); index++)
-                sumOfVectors.getVector()[index] = vector1.getVector()[index] + vector2.getVector()[index];
+                // sumOfVectors.getVector()[index] = vector1.getVector()[index] + vector2.getVector()[index];
+                sumOfVectors.setNumByIndex(index, vector1.getVector()[index] + vector2.getVector()[index]);
         }
         return sumOfVectors;
     }
@@ -175,7 +191,8 @@ public class Vector {
         int index = 0;
         if (vector1.getSize() != vector2.getSize()) {
             while (index < Math.min(vector1.getSize(), vector2.getSize())) {
-                differenceOfVectors.getVector()[index] = vector1.getVector()[index] - vector2.getVector()[index];
+                //differenceOfVectors.getVector()[index] = vector1.getVector()[index] - vector2.getVector()[index];
+                differenceOfVectors.setNumByIndex(index, vector1.getVector()[index] - vector2.getVector()[index]);
                 index++;
             }
             if (vector1.getSize() > vector2.getSize()) {
@@ -183,13 +200,15 @@ public class Vector {
             } else {
                 System.arraycopy(vector2.getVector(), index, differenceOfVectors.getVector(), index, vector2.getSize() - index);
                 while (index < differenceOfVectors.getSize()) {
-                    differenceOfVectors.getVector()[index] = differenceOfVectors.getVector()[index] * (-1);
+                    // differenceOfVectors.getVector()[index] = differenceOfVectors.getVector()[index] * (-1);
+                    differenceOfVectors.setNumByIndex(index, differenceOfVectors.getVector()[index] * (-1));
                     index++;
                 }
             }
         } else {
             for (int i = 0; i < differenceOfVectors.getSize(); i++) {
-                differenceOfVectors.getVector()[i] = vector1.getVector()[i] - vector2.getVector()[i];
+                //  differenceOfVectors.getVector()[i] = vector1.getVector()[i] - vector2.getVector()[i];
+                differenceOfVectors.setNumByIndex(i, vector1.getVector()[i] - vector2.getVector()[i]);
             }
         }
         return differenceOfVectors;
@@ -228,7 +247,7 @@ public class Vector {
 
         Vector vector1 = (Vector) o;
 
-        if (vectorLength != vector1.vectorLength) return false;
+        if (vectorSize != vector1.vectorSize) return false;
         return Arrays.equals(getVector(), vector1.getVector());
 
     }
@@ -236,7 +255,7 @@ public class Vector {
     @Override
     public int hashCode() {
         int result = Arrays.hashCode(getVector());
-        result = 31 * result + vectorLength;
+        result = 31 * result + vectorSize;
         return result;
     }
 }

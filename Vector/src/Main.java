@@ -37,5 +37,6 @@ public class Main {
         System.out.println(vectorDifference.toString());
         Vector vectorSum = Vector.sumOfVectors(firstVector, vectorFromArray2);
         System.out.println(vectorSum.toString());
+        System.out.println(firstVector.getLength());
     }
 }
