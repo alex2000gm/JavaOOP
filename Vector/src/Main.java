@@ -31,12 +31,15 @@ public class Main {
         System.out.println(diff2.toString());
         System.out.println(diff2.getNumByIndex(4));
         System.out.println();
-        double multiplication = Vector.scalarMultiplication(firstVector, vectorFromArray2);
+        double multiplication = Vector.getMultiplied(firstVector, vectorFromArray2);
         System.out.println(multiplication);
         Vector vectorDifference = Vector.differenceOfVectors(vectorFromArray2, firstVector);
         System.out.println(vectorDifference.toString());
         Vector vectorSum = Vector.sumOfVectors(firstVector, vectorFromArray2);
         System.out.println(vectorSum.toString());
         System.out.println(firstVector.getLength());
+
+        Vector check = new Vector(30,array);
+        System.out.println(check.toString());
     }
 }

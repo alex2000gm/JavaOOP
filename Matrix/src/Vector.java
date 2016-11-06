@@ -67,6 +67,7 @@ public class Vector {
     public Vector getMultiplied(double multiplier) {
         Vector multipliedVector = new Vector(this.getSize());
         for (int i = 0; i < multipliedVector.getSize(); i++) {
+            //  multipliedVector.getVector()[i] = this.getVector()[i] * multiplier;
             multipliedVector.setNumByIndex(i, this.getVector()[i] * multiplier);
         }
         return multipliedVector;
@@ -75,6 +76,7 @@ public class Vector {
     public Vector getInverse() {
         Vector inversedVector = new Vector(this.getSize());
         for (int i = 0; i < inversedVector.getSize(); i++) {
+            // inversedVector.getVector()[i] = this.getVector()[i] * (-1);
             inversedVector.setNumByIndex(i, this.getVector()[i] * (-1));
         }
         return inversedVector;
@@ -124,6 +126,7 @@ public class Vector {
         int index = 0;
         if (this.getSize() != vectorForSum.getSize()) {
             while (index < Math.min(this.getSize(), vectorForSum.getSize())) {
+                //sumOfVectors.getVector()[index] = this.getVector()[index] + vectorForSum.getVector()[index];
                 sumOfVectors.setNumByIndex(index, this.getVector()[index] + vectorForSum.getVector()[index]);
                 index++;
             }
@@ -140,6 +143,7 @@ public class Vector {
         int index = 0;
         if (this.getSize() != vectorForDifference.getSize()) {
             while (index < Math.min(this.getSize(), vectorForDifference.getSize())) {
+                // differenceOfVectors.getVector()[index] = this.getVector()[index] - vectorForDifference.getVector()[index];
                 differenceOfVectors.setNumByIndex(index, this.getVector()[index] - vectorForDifference.getVector()[index]);
                 index++;
             }
@@ -147,12 +151,14 @@ public class Vector {
                 System.arraycopy(this.getVector(), index, differenceOfVectors.getVector(), index, this.getSize() - index);
             } else {
                 while (index < differenceOfVectors.getSize()) {
+                    // differenceOfVectors.getVector()[index] = findBiggerVector(this, vectorForDifference).getVector()[index] * (-1);
                     differenceOfVectors.setNumByIndex(index, findBiggerVector(this, vectorForDifference).getVector()[index] * (-1));
                     index++;
                 }
             }
         } else {
             for (int i = 0; i < differenceOfVectors.getSize(); i++) {
+                // differenceOfVectors.getVector()[i] = this.getVector()[i] - vectorForDifference.getVector()[i];
                 differenceOfVectors.setNumByIndex(i, this.getVector()[i] - vectorForDifference.getVector()[i]);
             }
         }
@@ -164,6 +170,7 @@ public class Vector {
         int index = 0;
         if (vector1.getSize() != vector2.getSize()) {
             while (index < Math.min(vector1.getSize(), vector2.getSize())) {
+                // sumOfVectors.getVector()[index] = vector1.getVector()[index] + vector2.getVector()[index];
                 sumOfVectors.setNumByIndex(index, vector1.getVector()[index] + vector2.getVector()[index]);
                 index++;
             }
@@ -176,6 +183,7 @@ public class Vector {
             }
         } else {
             for (index = 0; index < sumOfVectors.getSize(); index++)
+                // sumOfVectors.getVector()[index] = vector1.getVector()[index] + vector2.getVector()[index];
                 sumOfVectors.setNumByIndex(index, vector1.getVector()[index] + vector2.getVector()[index]);
         }
         return sumOfVectors;
@@ -186,6 +194,7 @@ public class Vector {
         int index = 0;
         if (vector1.getSize() != vector2.getSize()) {
             while (index < Math.min(vector1.getSize(), vector2.getSize())) {
+                //differenceOfVectors.getVector()[index] = vector1.getVector()[index] - vector2.getVector()[index];
                 differenceOfVectors.setNumByIndex(index, vector1.getVector()[index] - vector2.getVector()[index]);
                 index++;
             }
@@ -194,12 +203,14 @@ public class Vector {
             } else {
                 System.arraycopy(vector2.getVector(), index, differenceOfVectors.getVector(), index, vector2.getSize() - index);
                 while (index < differenceOfVectors.getSize()) {
+                    // differenceOfVectors.getVector()[index] = differenceOfVectors.getVector()[index] * (-1);
                     differenceOfVectors.setNumByIndex(index, differenceOfVectors.getVector()[index] * (-1));
                     index++;
                 }
             }
         } else {
             for (int i = 0; i < differenceOfVectors.getSize(); i++) {
+                //  differenceOfVectors.getVector()[i] = vector1.getVector()[i] - vector2.getVector()[i];
                 differenceOfVectors.setNumByIndex(i, vector1.getVector()[i] - vector2.getVector()[i]);
             }
         }
