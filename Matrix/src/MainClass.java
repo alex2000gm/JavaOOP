@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /**
  * Created by alex2000 on 02.11.16.
  */
@@ -43,22 +45,42 @@ public class MainClass {
         Vector column = matrix.getColumnVector(0);
         System.out.println(column.toString());   */
 
-        Vector row1 = new Vector( 1, 31, 241, 78, 55, 34);
-        Vector row2 = new Vector( 56, 33, 22, 54, 23, 43);
-        Vector row3 = new Vector( 24, 53, 87, 32, 99, 47);
+        Vector row1 = new Vector(1, 31, 241, 78, 55, 34);
+        Vector row2 = new Vector(56, 33, 22, 54, 23, 43);
+        Vector row3 = new Vector(24, 53, 87, 32, 99, 47);
         Matrix matrix1 = new Matrix(row1, row2, row3);
         System.out.println(matrix1.toString());
 
-        Vector row21 = new Vector( 13, 43, 23);
-        Vector row22 = new Vector( 19, 4, 5);
-        Vector row23 = new Vector( 13, 63, 22);
-        Vector row24 = new Vector( 19, 2, 7);
-        Vector row25 = new Vector( 11, 33, 33);
-        Vector row26 = new Vector( 1, 99, 433);
+        Vector row21 = new Vector(13, 43, 23);
+        Vector row22 = new Vector(19, 4, 5);
+        Vector row23 = new Vector(13, 63, 22);
+        Vector row24 = new Vector(19, 2, 7);
+        Vector row25 = new Vector(11, 33, 33);
+        Vector row26 = new Vector(1, 99, 433);
         Matrix matrix2 = new Matrix(row21, row22, row23, row24, row25, row26);
         System.out.println(matrix2.toString());
 
         Matrix matrix3 = Matrix.getMultiplied(matrix1, matrix2);
         System.out.println(matrix3.toString());
+
+        Vector row31 = new Vector(11, 31, 21, 78, 55, 34);
+        Vector row32 = new Vector(56, 33, 22, 54, 23, 43);
+        Vector row33 = new Vector(24, 53, 87, 32, 99, 47);
+        Vector row34 = new Vector(13, 31, 24, 78, 55, 34);
+        Vector row35 = new Vector(16, 36, 26, 59, 21, 17);
+        Vector row36 = new Vector(19, 17, 99, 10, 49, 81);
+
+        Matrix squareMatrix = new Matrix(row31, row32, row33, row34, row35, row36);
+        System.out.println(squareMatrix.getDeterminant());
+
+
+        Vector smallRow1 = new Vector(11, 31, 21);
+        Vector smallRow2 = new Vector(56, 33, 22);
+        Vector smallRow3 = new Vector(24, 53, 87);
+        Matrix smallMatrix = new Matrix(smallRow1, smallRow2, smallRow3);
+
+     System.out.println(smallMatrix.getDeterminant());
+
+
     }
 }

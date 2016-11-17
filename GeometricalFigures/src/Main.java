@@ -3,7 +3,7 @@ import java.util.ArrayList;
 /**
  * Created by alex2000 on 08.10.16.
  */
-public class MainClass {
+public class Main {
     public static void main(String[] args) {
         GeometricalFigure rectangle1 = new Rectangle(530, 103);
         System.out.println(rectangle1.getArea());

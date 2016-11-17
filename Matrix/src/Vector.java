@@ -253,7 +253,6 @@ public class Vector {
 
         if (vectorSize != vector1.vectorSize) return false;
         return Arrays.equals(getVector(), vector1.getVector());
-
     }
 
     @Override

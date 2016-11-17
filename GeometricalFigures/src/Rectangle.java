@@ -33,7 +33,15 @@ class Rectangle extends GeometricalFigure implements Shape {
 
     @Override
     public String toString() {
-        String stringRectangle = "";
-        return stringRectangle.concat("Ширина прямоугольника = " + getWidth() + "  Высота = " + getHeight() + " Периметр = " + getPerimeter() + " Площадь = " + getArea());
+        StringBuilder rectangle = new StringBuilder("");
+        rectangle.append("Высота прямоугольника = ");
+        rectangle.append(getHeight());
+        rectangle.append(" Ширина = ");
+        rectangle.append(getWidth());
+        rectangle.append(" Периметр = ");
+        rectangle.append(getPerimeter());
+        rectangle.append(" Площадь = ");
+        rectangle.append(getArea());
+        return rectangle.toString();
     }
 }

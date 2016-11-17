@@ -26,7 +26,15 @@ class Circle extends GeometricalFigure {
 
     @Override
     public String toString() {
-        String stringCircle = "";
-        return stringCircle.concat("Высота круга = " + getHeight() + " Ширина = " + getWidth() + " Периметр = " + getPerimeter() + " Площадь = " + getArea());
+        StringBuilder circle = new StringBuilder("");
+        circle.append("Высота круга = ");
+        circle.append(getHeight());
+        circle.append(" Ширина = ");
+        circle.append(getWidth());
+        circle.append(" Периметр = ");
+        circle.append(getPerimeter());
+        circle.append(" Площадь = ");
+        circle.append(getArea());
+        return circle.toString();
     }
 }
