@@ -1,9 +1,7 @@
-import java.util.ArrayList;
-
 /**
  * Created by alex2000 on 02.11.16.
  */
-public class MainClass {
+public class Experiments {
     public static void main(String[] args) {
      /*   double[] array = new double[10];
         for (int i = 0; i < 10; i++) {
@@ -71,7 +69,7 @@ public class MainClass {
         Vector row36 = new Vector(19, 17, 99, 10, 49, 81);
 
         Matrix squareMatrix = new Matrix(row31, row32, row33, row34, row35, row36);
-      //  System.out.println(squareMatrix.getDeterminant());
+      System.out.println(squareMatrix.getDeterminant());
 
 
         Vector smallRow1 = new Vector(11, 31, 21);
@@ -79,17 +77,16 @@ public class MainClass {
         Vector smallRow3 = new Vector(24, 53, 87);
         Matrix smallMatrix = new Matrix(smallRow1, smallRow2, smallRow3);
 
-    // System.out.println(smallMatrix.getDeterminant());
+   System.out.println(smallMatrix.getDeterminant());
 
         Vector size4Row1 = new Vector(11, 31, 21, 78);
         Vector size4Row2 = new Vector(56, 33, 22, 54);
         Vector size4Row3 = new Vector(24, 53, 87, 32);
         Vector size4Row4 = new Vector(13, 31, 24, 78);
         Matrix fourXfour = new Matrix(size4Row1,size4Row2,size4Row3,size4Row4);
-     //   System.out.println(fourXfour.getDeterminant());
-        Matrix copy = new Matrix(fourXfour);
-        System.out.println(copy.toString());
-
+        System.out.println(fourXfour.getDeterminant());
+       // Matrix copyCheck = new Matrix(fourXfour);
+      //  System.out.println(copyCheck.toString());
 
 
     }
