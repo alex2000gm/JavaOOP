@@ -69,7 +69,7 @@ public class Experiments {
         Vector row36 = new Vector(19, 17, 99, 10, 49, 81);
 
         Matrix squareMatrix = new Matrix(row31, row32, row33, row34, row35, row36);
-      System.out.println(squareMatrix.getDeterminant());
+        System.out.println(squareMatrix.getDeterminant());
 
 
         Vector smallRow1 = new Vector(11, 31, 21);
@@ -77,17 +77,23 @@ public class Experiments {
         Vector smallRow3 = new Vector(24, 53, 87);
         Matrix smallMatrix = new Matrix(smallRow1, smallRow2, smallRow3);
 
-   System.out.println(smallMatrix.getDeterminant());
+        System.out.println(smallMatrix.getDeterminant());
 
         Vector size4Row1 = new Vector(11, 31, 21, 78);
         Vector size4Row2 = new Vector(56, 33, 22, 54);
         Vector size4Row3 = new Vector(24, 53, 87, 32);
         Vector size4Row4 = new Vector(13, 31, 24, 78);
-        Matrix fourXfour = new Matrix(size4Row1,size4Row2,size4Row3,size4Row4);
+        Matrix fourXfour = new Matrix(size4Row1, size4Row2, size4Row3, size4Row4);
         System.out.println(fourXfour.getDeterminant());
-       // Matrix copyCheck = new Matrix(fourXfour);
-      //  System.out.println(copyCheck.toString());
+        Matrix copyCheck = new Matrix(fourXfour);
+        System.out.println(copyCheck.toString());
+        if (squareMatrix.equals(fourXfour)) {
+            System.out.println("6x6 = 4x4");
+        }
+        if (fourXfour.equals(copyCheck)) {
 
+            System.out.println("4x4 = copy");
+        }
 
     }
 }

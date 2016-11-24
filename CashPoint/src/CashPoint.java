@@ -1,88 +1,115 @@
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public final class CashPoint {
-
+    private final static ArrayList<Integer> VALUES_LEGEND;
     private static int[] quantityOfNotes;
-    private static final int LIMIT_OF_NOTES_PER_VALUE = 10000;
-
-
-/*  quantityOfNotes:
-           quantityOfNotes[0] = quantity of notes with value 10
-           quantityOfNotes[1] = quantity of notes with value 50
-           quantityOfNotes[2] = quantity of notes with value 100
-           quantityOfNotes[3] = quantity of notes with value 500
-           quantityOfNotes[4] = quantity of notes with value 1000
-           quantityOfNotes[5] = quantity of notes with value 5000
-            */
+    private static final int LIMIT_OF_NOTES_PER_VALUE = 30;
 
     static {
-        quantityOfNotes = new int[6];
-        for (int i = 0; i < 6; i++) {
+        VALUES_LEGEND = new ArrayList<>();
+        VALUES_LEGEND.add(10);
+        VALUES_LEGEND.add(50);
+        VALUES_LEGEND.add(100);
+        VALUES_LEGEND.add(500);
+        VALUES_LEGEND.add(1000);
+        VALUES_LEGEND.add(5000);
+    }
+
+    static {
+        quantityOfNotes = new int[VALUES_LEGEND.size()];
+        for (int i = 0; i < quantityOfNotes.length; i++) {
             quantityOfNotes[i] = 0;
         }
     }
 
-    public static void insertMoney(int[] bunchOfMoney) {
-
-        int i = 0; //current position in bunchOfMoney array
-        int j = 0; //index in quantityOfNotes array
-
-        switch (bunchOfMoney[i]) {
-            case 10:
-                j = 0;
-                break;
-            case 50:
-                j = 1;
-                break;
-            case 100:
-                j = 2;
-                break;
-            case 500:
-                j = 3;
-                break;
-            case 1000:
-                j = 4;
-                break;
-            case 5000:
-                j = 5;
-                break;
+    public static int[] insertMoney(int[] bunchOfMoney) {
+        ArrayList<Integer> unknownNotes = new ArrayList<>();
+        int[] notAcceptedNotes = new int[quantityOfNotes.length];
+        int[] acceptedNotes = new int[quantityOfNotes.length];
+        for (int i = 0; i < quantityOfNotes.length; i++) {
+            notAcceptedNotes[i] = 0;
+            acceptedNotes[i] = 0;
+        }
+        boolean notAccepted = false;
+        for (int aBunchOfMoney : bunchOfMoney) {
+            if (VALUES_LEGEND.contains(aBunchOfMoney)) {
+                if (havePlaceForInsert(VALUES_LEGEND.indexOf(aBunchOfMoney), acceptedNotes)) {
+                    acceptedNotes[VALUES_LEGEND.indexOf(aBunchOfMoney)]++;
+                } else {
+                    notAccepted = true;
+                    notAcceptedNotes[VALUES_LEGEND.indexOf(aBunchOfMoney)]++;
+                }
+            } else {
+                notAccepted = true;
+                unknownNotes.add(aBunchOfMoney);
+            }
         }
 
-        int emptySpace = getLimitOfNotes() - getCurrentQuantity(j);
-        while (i < bunchOfMoney.length) {
-            if (emptySpace == 0) {
-                ArrayList<Integer> notAcceptedValues = new ArrayList<>();
-                notAcceptedValues.add(i);
-                int[] moneyForReturn = new int[bunchOfMoney.length - i];
-                System.arraycopy(bunchOfMoney, bunchOfMoney[i], moneyForReturn, 0, (bunchOfMoney.length - i));
-                System.out.printf("К сожалению, все купюры не могут быть приняты банкоматом, можем принять только %d ");
-                break;
+        if (notAccepted) {
+            System.out.println();
+            System.out.println("К сожалению, не все банкноты могут быть приняты банкоматом, следующие купюры будут возвращены:");
+            for (int i = 0; i < notAcceptedNotes.length; i++) {
+                if (notAcceptedNotes[i] > 0) {
+                    System.out.printf("%n%d * %d RUR%n", notAcceptedNotes[i], VALUES_LEGEND.get(i));
+                }
             }
-            switch (bunchOfMoney[i]) {
-                case 10:
-                    CashPoint.quantityOfNotes[0] = CashPoint.quantityOfNotes[0] + 1;
-                    break;
-                case 50:
-                    CashPoint.quantityOfNotes[1] = CashPoint.quantityOfNotes[1] + 1;
-                    break;
-                case 100:
-                    CashPoint.quantityOfNotes[2] = CashPoint.quantityOfNotes[2] + 1;
-                    break;
-                case 500:
-                    CashPoint.quantityOfNotes[3] = CashPoint.quantityOfNotes[3] + 1;
-                    break;
-                case 1000:
-                    CashPoint.quantityOfNotes[4] = CashPoint.quantityOfNotes[4] + 1;
-                    break;
-                case 5000:
-                    CashPoint.quantityOfNotes[5] = CashPoint.quantityOfNotes[5] + 1;
-                    break;
+            if (unknownNotes.size() > 0) {
+                System.out.printf("не распознанных купюр - %d%n", unknownNotes.size());
             }
-            i++;
+            String choice1 = "1";
+            String choice2 = "2";
+            String usersString = "";
+            Scanner scanner = new Scanner(System.in);
+            while (!choice1.equals(usersString) || !choice2.equals(usersString)) {
+                System.out.println();
+                System.out.println("Выберите один из вариантов и нажмите enter:");
+                System.out.println();
+                System.out.println("Принять купюры за исключением не принятых - 1");
+                System.out.println("Вернуть все внесенные купюры - 2");
+                System.out.println();
+                usersString = scanner.nextLine();
+                if (choice1.equals(usersString) || choice2.equals(usersString)) {
+                    break;
+                }
+            }
+            if (choice1.equals(usersString)) {
+
+                for (int i = 0; i < quantityOfNotes.length; i++) {
+                    quantityOfNotes[i] = quantityOfNotes[i] + acceptedNotes[i];
+                }
+                int quantityToReturn = unknownNotes.size();
+                for (int notAcceptedNote : notAcceptedNotes) {
+                    quantityToReturn = quantityToReturn + notAcceptedNote;
+                }
+
+                int[] moneyToReturn = new int[quantityToReturn];
+                int moneyToReturnIndex = 0;
+                if (notAcceptedNotes.length > 0) {
+                    for (int i = 0; i < notAcceptedNotes.length; i++) {
+                        for (int j = 0; j < notAcceptedNotes[i]; j++, moneyToReturnIndex++) {
+                            moneyToReturn[moneyToReturnIndex] = VALUES_LEGEND.get(i);
+                        }
+                    }
+                }
+                if (unknownNotes.size() > 0) {
+                    for (Integer unknownNote : unknownNotes) {
+                        moneyToReturn[moneyToReturnIndex] = unknownNote;
+                        moneyToReturnIndex++;
+                    }
+                }
+                return moneyToReturn;
+            } else {
+                return bunchOfMoney;
+            }
+        } else {
+            for (int i = 0; i < quantityOfNotes.length; i++) {
+                quantityOfNotes[i] = quantityOfNotes[i] + acceptedNotes[i];
+            }
         }
+        return new int[0];
     }
+
 
     public static int getCurrentQuantity(int i) {
         return quantityOfNotes[i];
@@ -96,32 +123,23 @@ public final class CashPoint {
         return LIMIT_OF_NOTES_PER_VALUE;
     }
 
-    public static int getMoney() {
+    private static boolean havePlaceForInsert(int index, int[] acceptedNotes) {
+        return getLimitOfNotes() - acceptedNotes[index] - getCurrentQuantity(index) > 0;
+    }
 
-        StringBuilder moneyInCashPoint = new StringBuilder("В банкомате есть купюры следующего достоинства:");
-        if (getQuantityOfNotes()[0] > 0) {
-            moneyInCashPoint.append(" 10;");
-        }
-        if (getQuantityOfNotes()[1] > 0) {
-            moneyInCashPoint.append(" 50;");
-        }
-        if (getQuantityOfNotes()[2] > 0) {
-            moneyInCashPoint.append(" 100;");
-        }
-        if (getQuantityOfNotes()[3] > 0) {
-            moneyInCashPoint.append(" 500;");
-        }
-        if (getQuantityOfNotes()[4] > 0) {
-            moneyInCashPoint.append(" 1000;");
-        }
-        if (getQuantityOfNotes()[5] > 0) {
-            moneyInCashPoint.append(" 5000;");
+    public static int[] getMoney() {
+
+        System.out.println("В банкомате есть купюры следующего достоинства:");
+        for (int i = 0; i < quantityOfNotes.length; i++) {
+            if (quantityOfNotes[i] > 0) {
+                System.out.printf("%n%d RUR", VALUES_LEGEND.get(i));
+            }
         }
 
         Scanner scanner = new Scanner(System.in);
         System.out.println("Купюрами какого достоинства произвести выдачу? (перечеслить через запятую)");
         String usersWish = scanner.nextLine();
 
-        return 1;
+        return new int[0];
     }
 }

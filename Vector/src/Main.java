@@ -39,7 +39,20 @@ public class Main {
         System.out.println(vectorSum.toString());
         System.out.println(firstVector.getLength());
 
-        Vector check = new Vector(30,array);
+        Vector check = new Vector(30, array);
         System.out.println(check.toString());
+
+        Vector vectorForEquals = new Vector(30, 56, 22, 34, 56);
+        Vector vectorForEquals2 = new Vector(30, 56, 22, 34, 56);
+        Vector vectorForEquals3 = new Vector(11, 66, 11, 34, 91);
+        if (vectorForEquals.equals(vectorForEquals2)) {
+            System.out.println(vectorForEquals.toString() + " equals " + vectorForEquals2.toString());
+        }
+        if (!vectorForEquals.equals(vectorForEquals3)) {
+            System.out.println(vectorForEquals.toString() + " not equals " + vectorForEquals3.toString());
+        }
+        if (!vectorForEquals2.equals(vectorForEquals3)) {
+            System.out.println(vectorForEquals2.toString() + " not equals " + vectorForEquals2.toString());
+        }
     }
 }

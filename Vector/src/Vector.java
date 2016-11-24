@@ -215,19 +215,6 @@ public class Vector {
         return scalarMultiplication;
     }
 
-    public boolean equals(Vector vector) {
-        boolean resultOfCompare = true;
-        if (this.getSize() != vector.getSize()) {
-            resultOfCompare = false;
-        }
-        int index = 0;
-        while (resultOfCompare && index < vector.getSize()) {
-            resultOfCompare = isComparison(this.getVector()[index], vector.getVector()[index]);
-            index++;
-        }
-        return resultOfCompare;
-    }
-
     private boolean isComparison(double numForCompare1, double numForCompare2) {
         final double EPSILON = 0.0001;
         return Math.abs(numForCompare1 - numForCompare2) < EPSILON;
@@ -242,7 +229,6 @@ public class Vector {
 
         if (vectorSize != vector1.vectorSize) return false;
         return Arrays.equals(getVector(), vector1.getVector());
-
     }
 
     @Override

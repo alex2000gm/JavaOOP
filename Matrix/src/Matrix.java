@@ -435,7 +435,7 @@ public class Matrix {
         if (getVerticalSize() != matrix1.getVerticalSize()) return false;
 
         for (int i = 0; i < this.getVerticalSize(); i++) {
-            if (!Arrays.equals(this.getVectorByIndex(i).getVector(), matrix1.getVectorByIndex(i).getVector())) {
+            if (!this.getVectorByIndex(i).equals(matrix1.getVectorByIndex(i))) {
                 return false;
             }
         }
