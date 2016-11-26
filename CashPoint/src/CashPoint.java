@@ -1,4 +1,7 @@
+import jdk.nashorn.internal.runtime.regexp.joni.encoding.CharacterType;
+
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
 public final class CashPoint {
@@ -27,10 +30,12 @@ public final class CashPoint {
         ArrayList<Integer> unknownNotes = new ArrayList<>();
         int[] notAcceptedNotes = new int[quantityOfNotes.length];
         int[] acceptedNotes = new int[quantityOfNotes.length];
+
         for (int i = 0; i < quantityOfNotes.length; i++) {
             notAcceptedNotes[i] = 0;
             acceptedNotes[i] = 0;
         }
+
         boolean notAccepted = false;
         for (int aBunchOfMoney : bunchOfMoney) {
             if (VALUES_LEGEND.contains(aBunchOfMoney)) {
@@ -61,6 +66,7 @@ public final class CashPoint {
             String choice2 = "2";
             String usersString = "";
             Scanner scanner = new Scanner(System.in);
+
             while (!choice1.equals(usersString) || !choice2.equals(usersString)) {
                 System.out.println();
                 System.out.println("Выберите один из вариантов и нажмите enter:");
@@ -123,12 +129,22 @@ public final class CashPoint {
         return LIMIT_OF_NOTES_PER_VALUE;
     }
 
+    public static int calcAllAvailableMoney() {
+        int sumInCashPoint = 0;
+        for (int i = 0; i < quantityOfNotes.length; i++) {
+            sumInCashPoint = sumInCashPoint + getCurrentQuantity(i) * VALUES_LEGEND.get(i);
+        }
+        return sumInCashPoint;
+    }
+
     private static boolean havePlaceForInsert(int index, int[] acceptedNotes) {
         return getLimitOfNotes() - acceptedNotes[index] - getCurrentQuantity(index) > 0;
     }
 
-    public static int[] getMoney() {
-
+    public static int[] getMoney(int sum) {
+        if (sum > calcAllAvailableMoney()) {
+            return new int[0];
+        }
         System.out.println("В банкомате есть купюры следующего достоинства:");
         for (int i = 0; i < quantityOfNotes.length; i++) {
             if (quantityOfNotes[i] > 0) {
@@ -137,9 +153,69 @@ public final class CashPoint {
         }
 
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Купюрами какого достоинства произвести выдачу? (перечеслить через запятую)");
+        System.out.println("Купюрами какого достоинства произвести выдачу? (перечеслить через запятую и нажать enter)");
         String usersWish = scanner.nextLine();
+        System.out.println();
+        System.out.println();
+        String[] usersWishArray = usersWish.split(",");
+        ArrayList<Integer> usersChoice = new ArrayList<>();
+        for (int i = 0; i < usersWishArray.length; i++) {
+            int addToList = Integer.parseInt(usersWishArray[i]);
+            usersChoice.add(addToList);
+        }
+        for (int i = 0; i < usersChoice.size(); i++) {
+            if (!VALUES_LEGEND.contains(usersChoice.get(i))) {
+                usersChoice.remove(i);
+            } else if (getCurrentQuantity(VALUES_LEGEND.indexOf(usersChoice.get(i))) == 0) {
+                usersChoice.remove(i);
+            } else if (sum < usersChoice.get(i)) {
+                usersChoice.remove(i);
+            }
+        }
+        Collections.sort(usersChoice);
+        ArrayList<Integer> reversedSort = new ArrayList<>();
+        for (int i = usersChoice.size() - 1; i >= 0; i--) {
+            reversedSort.add(usersChoice.get(i));
+        }
+        usersChoice.clear();
+        usersChoice.addAll(reversedSort);
+        ArrayList<Integer> calcOfSequence = new ArrayList<>();
+/* 1. если в банкомате нет 10 или их число меньше 10, то нужно делать выдачу кратно 50
+   2. если и 50 нет, то кратно 100 и т. д.
+   3. разменом выдаем только последнюю 1000
+   4. начинаем с самых больших купюр, в зависимости от суммы выдачи, выдаем их по максимуму
+9000
+1 - 5000 / 4 - 1000:
+1 - 5000 / 3 - 1000 / 2 - 500:
+1 - 5000 / 3 - 1000 / 1 - 500 / 5 - 100:
+1 - 5000 / 3 - 1000 / 1 - 500 / 4 - 100 / 2 - 50:
+1 - 5000 / 3 - 1000 / 1 - 500 / 4 - 100 / 1 - 50 / 4 - 10:
+*/
 
-        return new int[0];
+// TODO: 26.11.16 переделать сортировку на сортировку по убыванию
+        int sumForCalc = sum;
+        for (int i = 0; i < usersChoice.size(); i++) {
+            boolean dontMoveCounter = false;
+            int counterOfInserts = sumForCalc / usersChoice.get(i);
+            if (counterOfInserts > getCurrentQuantity(VALUES_LEGEND.indexOf(usersChoice.get(i)))) {
+                counterOfInserts = getCurrentQuantity(VALUES_LEGEND.indexOf(usersChoice.get(i)));
+                dontMoveCounter = true;
+            }
+            if (sumForCalc % usersChoice.get(i) == 0 && i < usersChoice.size() - 1 && !dontMoveCounter) {
+                counterOfInserts--;
+            }
+            sumForCalc = sumForCalc - counterOfInserts * usersChoice.get(i);
+            while (counterOfInserts > 0) {
+                calcOfSequence.add(usersChoice.get(i));
+                quantityOfNotes[VALUES_LEGEND.indexOf(usersChoice.get(i))]--;
+                counterOfInserts--;
+            }
+        }
+
+        int[] moneyForUser = new int[calcOfSequence.size()];
+        for (int i = 0; i < calcOfSequence.size(); i++) {
+            moneyForUser[i] = calcOfSequence.get(i);
+        }
+        return moneyForUser;
     }
 }
